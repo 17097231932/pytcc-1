@@ -32,24 +32,36 @@ cdef class Tcc:
         if self._state is not NULL:
             libtcc.tcc_delete(self._state)
 
-
+    ##################
+    # Preprocessor
     def add_include_path(self, path_name):
         self.err_check(libtcc.tcc_add_include_path(self._state, path_name))
 
     def add_sysinclude_path(self, path_name):
         self.err_check(libtcc.tcc_add_sysinclude_path(self._state, path_name))
 
+    ##################
+    # Compiling
+    def add_file(self, f):
+        self.err_check(libtcc.tcc_add_file(self._state, f))
+
     def compile_string(self, string):
         self.err_check(libtcc.tcc_compile_string(self._state, string))
 
-    def add_file(self, f):
-        self.err_check(libtcc.tcc_add_file(self._state, f))
+    ##################
+    # Linking
+    def set_output_type(self, output_type):
+        opt = {'memory' : 0, 'exe' : 1, 'dll' : 2, 'obj' : 3, 'preprocess' : 4}
+        self.err_check(libtcc.tcc_set_output_type(self._state, opt[output_type]))
 
     def add_library_path(self, p):
         self.err_check(libtcc.tcc_add_library_path(self._state, p))
 
     def add_library(self, f):
         self.err_check(libtcc.tcc_add_library(self._state, f))
+
+    def output_file(self, f):
+        self.err_check(libtcc.tcc_output_file(self._state, f))
 
     def run(self, args):
         cdef char **c_argv
