@@ -1,6 +1,6 @@
-import pytcc
+import tcc
 
-g = pytcc.Tcc()
+g = tcc.Tcc()
 
 g.compile_string("int main(){printf(\"Hello world!\\n\");}")
 

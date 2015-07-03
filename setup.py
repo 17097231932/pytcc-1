@@ -4,7 +4,7 @@ from Cython.Build import cythonize
 
 setup(
     ext_modules = cythonize([
-        Extension("tcc.tcc", ["tcc/tcc.pyx"],
+        Extension("tcc", ["tcc/tcc.pyx"],
                   libraries=["tcc"])
         ])
 )
